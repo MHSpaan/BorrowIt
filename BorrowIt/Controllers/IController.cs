@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BorrowIt.Controllers
 {
-    interface IController<T>
+    public interface IController<T>
     {
         Task<ICollection<T>> GetAll();
         Task<T>GetById(Guid id);
