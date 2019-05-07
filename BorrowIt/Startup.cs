@@ -31,8 +31,12 @@ namespace BorrowIt
                  options.UseSqlServer(
                      Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>(options =>
+                 options.UseSqlServer(
+                     Configuration.GetConnectionString("TestConnection")));
 
+            services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
+            
             services.AddScoped<IRepository<Order>, OrderRepository>();
             services.AddScoped<IRepository<Car>, CarRepository>();
             services.AddScoped<IRepository<Branch>, BranchRepository>();
