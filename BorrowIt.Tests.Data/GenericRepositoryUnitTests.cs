@@ -3,6 +3,9 @@ using BorrowIt.Data.Repositories;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace BorrowIt.UnitTests.Data
@@ -54,16 +57,6 @@ namespace BorrowIt.UnitTests.Data
             _sut = new GenericRepository<BaseClass>(_mockContext.Object, _classMock.Object);
             _sut.Save();
             _mockContext.Verify(a => a.Save());
-        }
-
-        [Fact]
-        public void WhenGettingEntities_ThenContextToListAsyncHasBeenCalled()
-        {
-            //_helperMock.Setup(a => a.GetEntities());
-            //_sut = new GenericRepository<BaseClass>(_mockContext.Object as ApplicationDbContext, _classMock.Object);
-            //_sut.GetEntities();
-            //_helperMock.Verify(a => a.GetEntities());
-            //hello matthijs i am alive.
         }
     }
 }
