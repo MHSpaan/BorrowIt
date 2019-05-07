@@ -63,7 +63,7 @@ namespace BorrowIt.UnitTests.Data
             //_sut = new GenericRepository<BaseClass>(_mockContext.Object as ApplicationDbContext, _classMock.Object);
             //_sut.GetEntities();
             //_helperMock.Verify(a => a.GetEntities());
-            //helloasd asd
+            //hello matthijs i am alive.
         }
     }
 }
