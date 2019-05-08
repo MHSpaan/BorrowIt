@@ -1,10 +1,8 @@
 ﻿using BorrowIt.Data;
 using BorrowIt.Data.Repositories;
-using BorrowIt.UnitTests.Data.Helpers;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
 using Xunit;
 
 namespace BorrowIt.UnitTests.Data
