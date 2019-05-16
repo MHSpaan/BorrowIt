@@ -3,9 +3,6 @@ using BorrowIt.Data.Repositories;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BorrowIt.UnitTests.Data
