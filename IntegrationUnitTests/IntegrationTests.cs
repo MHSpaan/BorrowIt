@@ -11,6 +11,7 @@ using BorrowIt.IntegrationTests;
 
 namespace BorrowIt.UnitTests.Integration
 {
+    [Trait("Integration Tests","Main")]
     public class IntegrationTests
     {
         private GenericController<Branch> _controller;
