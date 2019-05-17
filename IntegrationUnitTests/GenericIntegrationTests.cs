@@ -6,16 +6,15 @@ using Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BorrowIt.UnitTests.Integration
 {
-    public class BranchIntegrationTests : IntegrationTests
+    public class GenericIntegrationTests : IntegrationTests
     {
         protected GenericController<Branch> _controller;
 
-        public BranchIntegrationTests()
+        public GenericIntegrationTests()
         {
             var repository = new GenericRepository<Branch>(_applicationDbContext, _applicationDbContext.Branches);
             var service = new GenericServices<Branch>(repository, new BranchValidator());
@@ -53,7 +52,7 @@ namespace BorrowIt.UnitTests.Integration
         }
 
         [Fact]
-        public async Task CanCreateAndRetrieveBranches()
+        public async void WhenCreate_CanRetrieveBranches()
         {
             var branches = new List<Branch>();
 
@@ -75,10 +74,54 @@ namespace BorrowIt.UnitTests.Integration
 
             branches.Add(branch1);
             branches.Add(branch2);
+
             _controller.Create(branch1);
             _controller.Create(branch2);
             var results = await _controller.GetAll();
-            Assert.Equal(results.ToList(), branches);
+            var sortedResults = results.OrderBy(o => o.Address).ToList(); ;
+            Assert.Equal(sortedResults, branches);
+        }
+
+        [Fact]
+        public async void WhenCreate_CanEditBranch()
+        {
+            var branch = new Branch()
+            {
+                Address = "TestAddress",
+                City = "TestCity",
+                Country = "TestCountry",
+                Id = Guid.NewGuid()
+            };
+
+            _controller.Create(branch);
+
+            var branchUpdated = branch;
+            branchUpdated.Address = "UpdatedAddress";
+            branchUpdated.City = "UpdatedCity";
+            branchUpdated.Country = "UpdatedCountry";
+
+            _controller.Edit(branchUpdated);
+            var result = await _controller.GetById(branch.Id);
+
+            Assert.Equal(result, branchUpdated);
+        }
+
+        [Fact]
+        public async void WhenCreate_CanRemoveBranch()
+        {
+            var branch = new Branch()
+            {
+                Address = "TestAddress",
+                City = "TestCity",
+                Country = "TestCountry",
+                Id = Guid.NewGuid()
+            };
+
+            _controller.Create(branch);
+            await _controller.Delete(branch.Id);
+            var result = await _controller.GetById(branch.Id);
+
+            Assert.Null(result);
         }
     }
 }
