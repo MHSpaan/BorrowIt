@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BorrowIt.Data.Repositories
 {
-    public class GenericRepository<T> : IRepository<T> where T : BaseClass
+    public abstract class GenericRepository<T> : IRepository<T> where T : BaseClass
     {
         protected readonly DbSet<T> _set;
         protected readonly IApplicationDbContext _context;

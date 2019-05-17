@@ -10,30 +10,30 @@ using Xunit;
 
 namespace BorrowIt.UnitTests.Controllers
 {
-    [Trait("Methods", "GenericController")]
-    public class GenericControllerUnitTests
+    [Trait("Methods", "BranchesController")]
+    public class BranchesControllerUnitTests
     {
-        private IController<BaseClass> _sut;
-        private Mock<IServices<BaseClass>> _serviceMock;
+        private IController<Branch> _sut;
+        private Mock<IServices<Branch>> _serviceMock;
 
-        public GenericControllerUnitTests()
+        public BranchesControllerUnitTests()
         {
-            _serviceMock = new Mock<IServices<BaseClass>>();
+            _serviceMock = new Mock<IServices<Branch>>();
         }
 
         [Fact]
         public void WhenCreating_ThenReturningStatusCode201AndServicesCreateHasBeenCalled()
         {
             // Arrange
-            _serviceMock.Setup(a => a.Create(It.IsAny<BaseClass>()));
-            _sut = new GenericController<BaseClass>(_serviceMock.Object);
+            _serviceMock.Setup(a => a.Create(It.IsAny<Branch>()));
+            _sut = new BranchesController(_serviceMock.Object);
             var expected = new StatusCodeResult(201);
 
             // Act
-            var result = _sut.Create(It.IsAny<BaseClass>()) as StatusCodeResult;
+            var result = _sut.Create(It.IsAny<Branch>()) as StatusCodeResult;
 
             // Assert
-            _serviceMock.Verify(a => a.Create(It.IsAny<BaseClass>()));
+            _serviceMock.Verify(a => a.Create(It.IsAny<Branch>()));
             Assert.Equal(expected.StatusCode, result.StatusCode);
         }
 
@@ -42,7 +42,7 @@ namespace BorrowIt.UnitTests.Controllers
         {
             // Arrange
             _serviceMock.Setup(a => a.Delete(It.IsAny<Guid>())).Returns(Task.FromResult(new StatusCodeResult(204)));
-            _sut = new GenericController<BaseClass>(_serviceMock.Object);
+            _sut = new BranchesController(_serviceMock.Object);
             var expected = new StatusCodeResult(204);
 
             // Act
@@ -57,25 +57,25 @@ namespace BorrowIt.UnitTests.Controllers
         public void WhenEditing_ThenReturningStatusCode204AndServicesEditHasBeenCalled()
         {
             // Arrange
-            _serviceMock.Setup(a => a.Edit(It.IsAny<BaseClass>()));
-            _sut = new GenericController<BaseClass>(_serviceMock.Object);
+            _serviceMock.Setup(a => a.Edit(It.IsAny<Branch>()));
+            _sut = new BranchesController(_serviceMock.Object);
             var expected = new StatusCodeResult(204);
 
             // Act
-            var result = _sut.Edit(It.IsAny<BaseClass>()) as StatusCodeResult;
+            var result = _sut.Edit(It.IsAny<Branch>()) as StatusCodeResult;
 
             // Assert
-            _serviceMock.Verify(a => a.Edit(It.IsAny<BaseClass>()));
+            _serviceMock.Verify(a => a.Edit(It.IsAny<Branch>()));
             Assert.Equal(expected.StatusCode, result.StatusCode);
         }
 
         [Fact]
-        public void WhenGettingById_ThenReturningBaseClassAndServicesGetEntityByIdHasBeenCalled()
+        public void WhenGettingById_ThenReturningBranchAndServicesGetEntityByIdHasBeenCalled()
         {
             // Arrange
-            _serviceMock.Setup(a => a.GetEntityById(It.IsAny<Guid>())).Returns(Task.FromResult(It.IsAny<BaseClass>()));
-            _sut = new GenericController<BaseClass>(_serviceMock.Object);
-            var expected = It.IsAny<BaseClass>();
+            _serviceMock.Setup(a => a.GetEntityById(It.IsAny<Guid>())).Returns(Task.FromResult(It.IsAny<Branch>()));
+            _sut = new BranchesController(_serviceMock.Object);
+            var expected = It.IsAny<Branch>();
 
             // Act
             var result = _sut.GetById(It.IsAny<Guid>()).Result;
@@ -86,12 +86,12 @@ namespace BorrowIt.UnitTests.Controllers
         }
 
         [Fact]
-        public void WhenGettingAll_ThenReturningListBaseClassAndServicesGetEntitiesHasBeenCalled()
+        public void WhenGettingAll_ThenReturningListBranchAndServicesGetEntitiesHasBeenCalled()
         {
             // Arrange
-            _serviceMock.Setup(a => a.GetEntities()).Returns(Task.FromResult(It.IsAny<ICollection<BaseClass>>()));
-            _sut = new GenericController<BaseClass>(_serviceMock.Object);
-            var expected = It.IsAny<ICollection<BaseClass>>();
+            _serviceMock.Setup(a => a.GetEntities()).Returns(Task.FromResult(It.IsAny<ICollection<Branch>>()));
+            _sut = new BranchesController(_serviceMock.Object);
+            var expected = It.IsAny<ICollection<Branch>>();
 
             // Act
             var result = _sut.GetAll().Result;
