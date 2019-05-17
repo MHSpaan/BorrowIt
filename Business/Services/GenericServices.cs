@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogic.Services
 {
-    public class GenericServices<T> : IServices<T> where T : BaseClass
+    public abstract class GenericServices<T> : IServices<T> where T : BaseClass
     {
 
         protected readonly IRepository<T> _repository;

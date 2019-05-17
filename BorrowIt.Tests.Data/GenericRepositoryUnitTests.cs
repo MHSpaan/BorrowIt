@@ -1,59 +1,84 @@
 ﻿using BorrowIt.Data;
 using BorrowIt.Data.Repositories;
+using BorrowIt.UnitTests.Data.Helpers;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
 using Xunit;
 
 namespace BorrowIt.UnitTests.Data
 {
     [Trait("Methods", "GenericRepositories")]
-    public sealed class GenericRepositoryUnitTests
+    public sealed class BranchRepositoryUnitTests
     {
-        private IRepository<BaseClass> _sut;
+        private IRepository<Branch> _sut;
         private Mock<IApplicationDbContext> _mockContext;
-        private Mock<DbSet<BaseClass>> _classMock;
+        private Mock<IRepositoryUnitTestsHelper> _mockHelper;
 
-        public GenericRepositoryUnitTests()
+        public BranchRepositoryUnitTests()
         {
             _mockContext = new Mock<IApplicationDbContext>();
-            _classMock = new Mock<DbSet<BaseClass>>();
+            _mockHelper = new Mock<IRepositoryUnitTestsHelper>();
         }
 
         [Fact]
         public void WhenCreating_ThenContextAddHasBeenCalled()
         {
-            _classMock.Setup(a => a.Add(It.IsAny<BaseClass>()));
-            _sut = new GenericRepository<BaseClass>(_mockContext.Object, _classMock.Object);
-            _sut.Create(It.IsAny<BaseClass>());
-            _classMock.Verify(a => a.Add(It.IsAny<BaseClass>()));
+            _mockContext.Setup(a => a.Branches.Add(It.IsAny<Branch>()));
+            _sut = new BranchRepository(_mockContext.Object);
+            _sut.Create(It.IsAny<Branch>());
+            _mockContext.Verify(a => a.Branches.Add(It.IsAny<Branch>()));
         }
 
         [Fact]
         public void WhenDeleting_ThenContextRemoveHasBeenCalled()
         {
-            _classMock.Setup(a => a.Remove(It.IsAny<BaseClass>()));
-            _sut = new GenericRepository<BaseClass>(_mockContext.Object, _classMock.Object);
-            _sut.Delete(It.IsAny<BaseClass>());
-            _classMock.Verify(a => a.Remove(It.IsAny<BaseClass>()));
+            _mockContext.Setup(a => a.Branches.Remove(It.IsAny<Branch>()));
+            _sut = new BranchRepository(_mockContext.Object);
+            _sut.Delete(It.IsAny<Branch>());
+            _mockContext.Verify(a => a.Branches.Remove(It.IsAny<Branch>()));
         }
 
         [Fact]
         public void WhenEditing_ThenContextUpdateHasBeenCalled()
         {
-            _classMock.Setup(a => a.Update(It.IsAny<BaseClass>()));
-            _sut = new GenericRepository<BaseClass>(_mockContext.Object, _classMock.Object);
-            _sut.Edit(It.IsAny<BaseClass>());
-            _classMock.Verify(a => a.Update(It.IsAny<BaseClass>()));
+            _mockContext.Setup(a => a.Branches.Update(It.IsAny<Branch>()));
+            _sut = new BranchRepository(_mockContext.Object);
+            _sut.Edit(It.IsAny<Branch>());
+            _mockContext.Verify(a => a.Branches.Update(It.IsAny<Branch>()));
         }
 
         [Fact]
         public void WhenSaving_ThenContextSaveHasBeenCalled()
         {
             _mockContext.Setup(a => a.Save());
-            _sut = new GenericRepository<BaseClass>(_mockContext.Object, _classMock.Object);
+            _sut = new BranchRepository(_mockContext.Object);
             _sut.Save();
             _mockContext.Verify(a => a.Save());
+        }
+
+        [Fact]
+        public void WhenGettingEntities_ThenHelperGetEntitiesHasBeenCalled()
+        {
+            // Question: The idea is to check if the ToListAsync() method has been called when using the GetEntities() method of the Repository.
+
+            //_mockContext.Setup(a => a.Branches.ToListAsync());
+            //_sut = new BranchRepository(_mockContext.Object);
+            //var result = _sut.GetEntities();
+            //_mockContext.Verify(a => a.Branches.ToListAsync());
+        }
+
+        [Fact]
+        public void WhenGettingEntityById_ThenContextFindAsyncHasBeenCalled()
+        {
+            _mockContext.Setup(a => a.Branches.FindAsync(It.IsAny<Guid>()));
+            _sut = new BranchRepository(_mockContext.Object);
+            _sut.GetEntityById(It.IsAny<Guid>());
+            _mockContext.Verify(a => a.Branches.FindAsync(It.IsAny<Guid>()));
         }
     }
 }

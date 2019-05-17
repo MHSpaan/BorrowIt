@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BorrowIt.Controllers
 {
-    public class GenericController<T> : ControllerBase, IController<T> where T : BaseClass
+    public abstract class GenericController<T> : ControllerBase, IController<T> where T : BaseClass
     {
         protected readonly IServices<T> _services;
 

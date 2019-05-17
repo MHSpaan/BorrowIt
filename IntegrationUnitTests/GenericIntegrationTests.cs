@@ -12,13 +12,13 @@ namespace BorrowIt.UnitTests.Integration
 {
     public class GenericIntegrationTests : IntegrationTests
     {
-        protected GenericController<Branch> _controller;
+        protected BranchesController _controller;
 
         public GenericIntegrationTests()
         {
-            var repository = new GenericRepository<Branch>(_applicationDbContext, _applicationDbContext.Branches);
-            var service = new GenericServices<Branch>(repository, new BranchValidator());
-            _controller = new GenericController<Branch>(service);
+            var repository = new BranchRepository(_applicationDbContext);
+            var service = new BranchServices(repository, new BranchValidator());
+            _controller = new BranchesController(service);
         }
 
         [Fact]
