@@ -77,8 +77,8 @@ namespace BorrowIt.UnitTests.Integration
             branches.Add(branch2);
             _controller.Create(branch1);
             _controller.Create(branch2);
-            var results = await _controller.GetAll();
-            Assert.Equal(results.ToList(), branches);
+            var results = (await _controller.GetAll()).ToList();
+            Assert.Equal(results.OrderBy(a=>a.Address), branches.OrderBy(a => a.Address));
         }
     }
 }

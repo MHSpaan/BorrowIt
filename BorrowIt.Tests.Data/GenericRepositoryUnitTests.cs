@@ -66,10 +66,10 @@ namespace BorrowIt.UnitTests.Data
         {
             // Question: The idea is to check if the ToListAsync() method has been called when using the GetEntities() method of the Repository.
 
-            //_mockContext.Setup(a => a.Branches.ToListAsync());
-            //_sut = new BranchRepository(_mockContext.Object);
-            //var result = _sut.GetEntities();
-            //_mockContext.Verify(a => a.Branches.ToListAsync());
+            _mockHelper.Setup(a => a.GetEntities());
+            _sut = new BranchRepository(_mockHelper.As<IApplicationDbContext>().Object);
+            _sut.GetEntities();
+            _mockHelper.Verify(a => a.GetEntities());
         }
 
         [Fact]

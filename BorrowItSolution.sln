@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BorrowIt.UnitTests.Business
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BorrowIt.UnitTests.Integration", "IntegrationUnitTests\BorrowIt.UnitTests.Integration.csproj", "{61E1D348-305F-40FB-870A-17FC4E8E3BAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BorrowIt.UnitTests.Controllers", "BorrowIt.UnitTests.Controllers\BorrowIt.UnitTests.Controllers.csproj", "{645DB045-9314-41A0-A5CE-0210065DA4D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BorrowIt.UnitTests.Controllers", "BorrowIt.UnitTests.Controllers\BorrowIt.UnitTests.Controllers.csproj", "{645DB045-9314-41A0-A5CE-0210065DA4D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

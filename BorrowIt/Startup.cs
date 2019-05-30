@@ -7,9 +7,12 @@ using Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace BorrowIt
 {
@@ -25,6 +28,8 @@ namespace BorrowIt
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSpaStaticFiles(a => { a.RootPath = "BorrowItFrontEnd/dist"; });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -36,7 +41,7 @@ namespace BorrowIt
                      Configuration.GetConnectionString("TestConnection")));
 
             services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
-            
+
             services.AddScoped<IRepository<Order>, OrderRepository>();
             services.AddScoped<IRepository<Car>, CarRepository>();
             services.AddScoped<IRepository<Branch>, BranchRepository>();
@@ -70,10 +75,29 @@ namespace BorrowIt
                 app.UseHsts();
             }
 
+            app.UseStaticFiles();
+            app.UseSpaStaticFiles();
+
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(name: "default", template: "{controller}/{action=index}/{id}");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "BorrowItFrontEnd";
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
+            });
+
+
             app.UseHttpsRedirection();
             app.UseMvc();
         }
 
-        
+
     }
 }

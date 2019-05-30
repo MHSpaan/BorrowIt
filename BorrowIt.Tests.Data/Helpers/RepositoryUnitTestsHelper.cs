@@ -2,19 +2,11 @@
 using BorrowIt.Data.Repositories;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace BorrowIt.UnitTests.Data.Helpers
 {
-    public class RepositoryUnitTestsHelper : BranchRepository, IRepositoryUnitTestsHelper
+    public class RepositoryUnitTestsHelper
     {
-        public RepositoryUnitTestsHelper(IApplicationDbContext context) : base(context)
-        {
-
-        }
-
-        public new void GetEntities()
-        {
-            _context.Branches.ToListAsync();
-        }
     }
 }
