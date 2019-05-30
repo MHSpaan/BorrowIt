@@ -1,6 +1,5 @@
-﻿using BusinessLogic.Services;
+using BusinessLogic.Services;
 using Domain;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -31,7 +30,7 @@ namespace BorrowIt.Controllers
             return StatusCode(204);
         }
 
-        [HttpPut]
+        [HttpPatch]
         public ActionResult Edit(T entity)
         {
             _services.Edit(entity);
